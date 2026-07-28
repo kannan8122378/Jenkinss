@@ -26,7 +26,7 @@ app.get("/api", (req, res) => {
       return res.status(500).send(err.message);
     }
     res.json({
-      message: "Backend connected to MySQL successfully!",
+      message: "Backend connected to MySQL successfully!!",
       databaseTime: results[0].currentTime,
     });
   });
