@@ -20,7 +20,7 @@ db.connect((err) => {
   console.log("Connected to MySQL");
 });
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   db.query("SELECT NOW() AS currentTime", (err, results) => {
     if (err) {
       return res.status(500).send(err.message);
