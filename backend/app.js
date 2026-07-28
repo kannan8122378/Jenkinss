@@ -5,19 +5,14 @@ const mysql = require("mysql2");
 const app = express();
 
 app.use(cors());
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: "mysql",
   user: "root",
   password: "root123",
   database: "devopsdb",
-});
-
-db.connect((err) => {
-  if (err) {
-    console.error("Database connection failed:", err);
-    return;
-  }
-  console.log("Connected to MySQL");
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
 app.get("/api", (req, res) => {
