@@ -2,21 +2,23 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Build') {
+        stage('Deploy to App Server') {
             steps {
-                sh 'docker compose build'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh 'docker compose up -d'
+                sh '''
+                ssh -o StrictHostKeyChecking=no ubuntu@172.31.14.190 "
+                    cd /home/ubuntu/three-tier-app &&
+                    git pull origin main &&
+                    docker compose down &&
+                    docker compose up -d --build
+                "
+                '''
             }
         }
     }
