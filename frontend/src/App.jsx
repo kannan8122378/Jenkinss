@@ -7,7 +7,22 @@ function App() {
   const [vehicle, setVehicle] = useState("Mini");
 
   const bookRide = () => {
-    alert(`Ride Booked!\n\nPickup: ${pickup}\nDrop: ${drop}\nVehicle: ${vehicle}`);
+    const bookRide = async () => {
+  const response = await fetch("/api/book", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      pickup,
+      drop,
+      vehicle
+    })
+  });
+
+  const data = await response.json();
+  alert(data.message);
+};
   };
 
   return (
