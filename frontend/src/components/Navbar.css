@@ -1,40 +1,69 @@
-nav{
-    background:#0d6efd;
-    padding:15px 40px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.navbar{
 
     display:flex;
     justify-content:space-between;
     align-items:center;
+
+    padding:18px 60px;
+
+    background:linear-gradient(90deg,#2563eb,#1d4ed8);
+
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
 }
 
 .logo{
 
     color:white;
+
     font-size:28px;
+
     font-weight:bold;
 
 }
 
-.menu{
+.nav-links{
 
     display:flex;
-    gap:30px;
+
+    list-style:none;
+
+    gap:35px;
 
 }
 
-.menu a{
+.nav-links a{
 
     color:white;
+
     text-decoration:none;
+
     font-size:18px;
-    font-weight:500;
+
+    font-weight:600;
 
     transition:.3s;
 
+    padding:8px 15px;
+
+    border-radius:8px;
+
 }
 
-.menu a:hover{
+.nav-links a:hover{
 
-    color:yellow;
+    background:white;
+
+    color:#2563eb;
 
 }
