@@ -14,22 +14,6 @@ function About(){
 
             <h3>Technology Stack</h3>
 
-            <ul>
-
-                <li>React</li>
-
-                <li>Express</li>
-
-                <li>MySQL</li>
-
-                <li>Docker</li>
-
-                <li>Jenkins</li>
-
-                <li>AWS EC2</li>
-
-            </ul>
-
         </div>
 
     );
