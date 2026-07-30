@@ -6,7 +6,7 @@ function Navbar() {
     <nav className="navbar">
 
       <div className="logo">
-        🚖 Stackly Ride
+        Kira Travels
       </div>
 
       <ul className="nav-links">
