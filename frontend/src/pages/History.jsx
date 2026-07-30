@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 
 function History(){
 
@@ -6,11 +6,11 @@ function History(){
 
     useEffect(()=>{
 
-        loadBookings();
+        fetchBookings();
 
     },[]);
 
-    const loadBookings=async()=>{
+    const fetchBookings=async()=>{
 
         const res=await fetch("/api/bookings");
 
@@ -22,11 +22,11 @@ function History(){
 
     return(
 
-        <div>
+        <div className="container">
 
-            <h2>Booking History</h2>
+            <h1>Booking History</h1>
 
-            <table border="1">
+            <table>
 
                 <thead>
 
@@ -40,8 +40,6 @@ function History(){
 
                         <th>Vehicle</th>
 
-                        <th>Date</th>
-
                     </tr>
 
                 </thead>
@@ -50,19 +48,17 @@ function History(){
 
                     {
 
-                        bookings.map((booking)=>(
+                        bookings.map((item)=>(
 
-                            <tr key={booking.id}>
+                            <tr key={item.id}>
 
-                                <td>{booking.id}</td>
+                                <td>{item.id}</td>
 
-                                <td>{booking.pickup}</td>
+                                <td>{item.pickup}</td>
 
-                                <td>{booking.drop_location}</td>
+                                <td>{item.drop_location}</td>
 
-                                <td>{booking.vehicle}</td>
-
-                                <td>{booking.created_at}</td>
+                                <td>{item.vehicle}</td>
 
                             </tr>
 
