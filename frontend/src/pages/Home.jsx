@@ -68,7 +68,7 @@ function Home() {
   return (
     <div className="container">
 
-      <h1>🚖 Stackly Ride</h1>
+      <h1>🚖 Kira Travels </h1>
 
       <h2>Book Your Ride in Seconds</h2>
 
