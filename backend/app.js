@@ -9,9 +9,10 @@ app.use(express.json());
 
 // MySQL Connection
 const db = mysql.createPool({
-  host: "mysql",
-  user: "root",
-  password: "root123",
+  host: "172.31.5.137",       // Private IP of your MySQL EC2
+  port: 3306,
+  user: "devopsuser",
+  password: "StrongPassword123",
   database: "devopsdb",
   waitForConnections: true,
   connectionLimit: 10,
@@ -36,40 +37,103 @@ app.get("/api", (req, res) => {
 
 // Book Ride
 app.post("/api/book", (req, res) => {
-  const { pickup, drop, vehicle } = req.body;
 
-  db.query(
-    "INSERT INTO bookings (pickup, drop_location, vehicle) VALUES (?, ?, ?)",
-    [pickup, drop, vehicle],
-    (err, result) => {
-      if (err) {
-        return res.status(500).json({
-          message: err.message,
+    const { pickup, drop, vehicle } = req.body;
+
+    // Validation
+    if (!pickup || !drop || !vehicle) {
+        return res.status(400).json({
+            success: false,
+            message: "Please provide pickup, destination and vehicle."
         });
-      }
-
-      res.json({
-        message: "Ride booked successfully!",
-        bookingId: result.insertId,
-      });
     }
-  );
+
+    const sql = `
+        INSERT INTO bookings
+        (pickup, drop_location, vehicle)
+        VALUES (?, ?, ?)
+    `;
+
+    db.query(sql, [pickup, drop, vehicle], (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        res.status(201).json({
+            success: true,
+            message: "Ride booked successfully!",
+            bookingId: result.insertId
+        });
+
+    });
+
 });
 
 // View All Bookings
 app.get("/api/bookings", (req, res) => {
-  db.query(
-    "SELECT * FROM bookings ORDER BY created_at DESC",
-    (err, results) => {
-      if (err) {
-        return res.status(500).json({
-          message: err.message,
-        });
-      }
 
-      res.json(results);
-    }
-  );
+    const sql = `
+        SELECT
+            id,
+            pickup,
+            drop_location,
+            vehicle,
+            created_at
+        FROM bookings
+        ORDER BY created_at DESC
+    `;
+
+    db.query(sql, (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        res.status(200).json(results);
+
+    });
+
+});
+
+//Delete Booking API
+app.delete("/api/book/:id", (req, res) => {
+
+    const id = req.params.id;
+
+    db.query(
+        "DELETE FROM bookings WHERE id = ?",
+        [id],
+        (err, result) => {
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Booking not found"
+                });
+            }
+
+            res.json({
+                success: true,
+                message: "Booking deleted successfully"
+            });
+
+        }
+    );
+
 });
 
 app.listen(3000, () => {
