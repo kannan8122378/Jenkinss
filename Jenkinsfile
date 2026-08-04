@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh '''
                 ssh -o StrictHostKeyChecking=no ubuntu@172.31.7.153  "
-                    cd /home/ubuntu/three-tier-app &&
+                    cd /home/ubuntu/Jenkinss &&
                     git pull origin main &&
                     docker compose down &&
                     docker compose up -d --build
