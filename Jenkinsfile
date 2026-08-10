@@ -12,7 +12,7 @@ pipeline {
         stage('Deploy to App Server') {
             steps {
                 sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@172.31.7.153 "
+                ssh -o StrictHostKeyChecking=no ubuntu@172.31.37.32 "
                     cd /home/ubuntu/ &&
                     git pull origin main &&
                     docker compose down &&
